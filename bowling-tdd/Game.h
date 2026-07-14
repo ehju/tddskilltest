@@ -5,7 +5,8 @@
 // Bowling game score keeper.
 //
 // Supports open frames, spares, and strikes (including consecutive
-// strikes). 10th-frame bonus rolls are handled in a later phase.
+// strikes), as well as the 10th (final) frame's bonus rolls (spare/strike
+// bonus rolls and the perfect game).
 class Game {
 public:
     void roll(int pins);
