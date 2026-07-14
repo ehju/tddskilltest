@@ -9,6 +9,20 @@ int Game::score() {
     size_t rollIndex = 0;
     for (int frame = 0; frame < 10 && rollIndex < rolls_.size(); ++frame) {
         int first = rolls_[rollIndex];
+
+        if (first == 10) {
+            // Strike: frame ends after one roll; bonus is next two rolls.
+            total += 10;
+            ++rollIndex;
+            if (rollIndex < rolls_.size()) {
+                total += rolls_[rollIndex];
+            }
+            if (rollIndex + 1 < rolls_.size()) {
+                total += rolls_[rollIndex + 1];
+            }
+            continue;
+        }
+
         total += first;
         ++rollIndex;
 

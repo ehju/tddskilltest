@@ -81,12 +81,12 @@ TEST(GameTest, TwoConsecutiveStrikesFollowedByOpenFrameScoresFortySeven) {
     EXPECT_EQ(47, game.score());
 }
 
-TEST(GameTest, NineStrikesThenOpenTenthFrameScoresTwoHundredFiftySix) {
+TEST(GameTest, NineStrikesThenOpenTenthFrameScoresTwoHundredSixtySeven) {
     Game game;
     for (int frame = 0; frame < 9; ++frame) {
         game.roll(10); // strike
     }
     game.roll(9);
     game.roll(0); // 10th frame: open frame, not a strike
-    EXPECT_EQ(256, game.score());
+    EXPECT_EQ(267, game.score());
 }
