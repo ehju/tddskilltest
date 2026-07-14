@@ -1,0 +1,17 @@
+# Secrets
+.mcp.json
+
+# Visual Studio
+.vs/
+*.vcxproj.user
+
+# Build output
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Bb]in/
+[Oo]bj/
+
+# NuGet packages (restorable)
+packages/
