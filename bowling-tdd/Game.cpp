@@ -1,7 +1,15 @@
 #include "Game.h"
 
+namespace {
+constexpr int kPinsPerFrame = 10;
+}
+
 void Game::roll(int pins) {
     rolls_.push_back(pins);
+}
+
+int Game::rollAt(size_t index) const {
+    return index < rolls_.size() ? rolls_[index] : 0;
 }
 
 int Game::score() {
@@ -10,36 +18,22 @@ int Game::score() {
     for (int frame = 0; frame < 10 && rollIndex < rolls_.size(); ++frame) {
         int first = rolls_[rollIndex];
 
-        if (first == 10) {
+        if (first == kPinsPerFrame) {
             // Strike: frame ends after one roll; bonus is next two rolls.
-            total += 10;
+            total += kPinsPerFrame + rollAt(rollIndex + 1) + rollAt(rollIndex + 2);
             ++rollIndex;
-            if (rollIndex < rolls_.size()) {
-                total += rolls_[rollIndex];
-            }
-            if (rollIndex + 1 < rolls_.size()) {
-                total += rolls_[rollIndex + 1];
-            }
             continue;
         }
 
-        total += first;
-        ++rollIndex;
+        int second = rollAt(rollIndex + 1);
+        total += first + second;
 
-        int second = 0;
-        bool hasSecond = rollIndex < rolls_.size();
-        if (hasSecond) {
-            second = rolls_[rollIndex];
-            total += second;
-            ++rollIndex;
-        }
-
-        if (hasSecond && first + second == 10) {
+        if (first + second == kPinsPerFrame) {
             // Spare: add next roll as bonus.
-            if (rollIndex < rolls_.size()) {
-                total += rolls_[rollIndex];
-            }
+            total += rollAt(rollIndex + 2);
         }
+
+        rollIndex += 2;
     }
     return total;
 }
