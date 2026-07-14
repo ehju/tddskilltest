@@ -53,3 +53,40 @@ TEST(GameTest, AllSparesGameScoresOneHundredFortyEight) {
     game.roll(3); // bonus roll
     EXPECT_EQ(148, game.score());
 }
+
+// Phase 3 — strike bonus (single strike and consecutive strikes),
+// with strikes occurring only in frames 1-9 so that the bonus rolls are
+// always ordinary frame rolls (10th-frame bonus rolls are out of scope).
+
+TEST(GameTest, OneStrikeFollowedByOpenFramesScoresTwentyFour) {
+    Game game;
+    game.roll(10); // strike
+    game.roll(3);
+    game.roll(4);
+    for (int i = 0; i < 16; ++i) {
+        game.roll(0);
+    }
+    EXPECT_EQ(24, game.score());
+}
+
+TEST(GameTest, TwoConsecutiveStrikesFollowedByOpenFrameScoresFortySeven) {
+    Game game;
+    game.roll(10); // frame 1 strike
+    game.roll(10); // frame 2 strike
+    game.roll(3);
+    game.roll(4);
+    for (int i = 0; i < 14; ++i) {
+        game.roll(0);
+    }
+    EXPECT_EQ(47, game.score());
+}
+
+TEST(GameTest, NineStrikesThenOpenTenthFrameScoresTwoHundredFiftySix) {
+    Game game;
+    for (int frame = 0; frame < 9; ++frame) {
+        game.roll(10); // strike
+    }
+    game.roll(9);
+    game.roll(0); // 10th frame: open frame, not a strike
+    EXPECT_EQ(256, game.score());
+}
